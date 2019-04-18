@@ -45,4 +45,10 @@ public class ProductController {
         return productRepository.findByNameLike("%" + name + "%");
     }
 
+    @GetMapping("/products")
+    @PreAuthorize("hasRole('ROLE_PRODUCT_ADMIN')")
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
 }
