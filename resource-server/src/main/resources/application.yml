@@ -5,13 +5,17 @@ spring:
       minimum-idle: 1
       maximum-pool-size: 5
     driver-class-name: com.mysql.jdbc.Driver
-    jdbc-url: jdbc:mysql://localhost/oauth2
+    jdbc-url: jdbc:mysql://localhost:3306/oauth2?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Jakarta&useSSL=false
     username: root
-    password:
+    password: root
     initialization-mode: always
   jpa:
     hibernate:
       ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        sql_format: true
 # --- server
 server:
   port: 8083
