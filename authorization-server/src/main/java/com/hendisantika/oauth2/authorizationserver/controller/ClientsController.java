@@ -11,10 +11,7 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Set;
@@ -55,5 +52,24 @@ public class ClientsController {
 
         model.addAttribute("clientDetails", clientDetails);
         return "form";
+    }
+
+    @PostMapping("/edit")
+    @PreAuthorize("hasRole('ROLE_OAUTH_ADMIN')")
+    public String editClient(
+            @ModelAttribute BaseClientDetails clientDetails,
+            @RequestParam(value = "newClient", required = false) String newClient) {
+        if (newClient == null) {
+
+            clientsDetailsService.updateClientDetails(clientDetails);
+        } else {
+            clientsDetailsService.addClientDetails(clientDetails);
+        }
+
+
+        if (!clientDetails.getClientSecret().isEmpty()) {
+            clientsDetailsService.updateClientSecret(clientDetails.getClientId(), clientDetails.getClientSecret());
+        }
+        return "redirect:/";
     }
 }
