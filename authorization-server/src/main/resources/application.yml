@@ -16,6 +16,8 @@ spring:
     properties:
       hibernate:
         sql_format: true
+  main:
+    allow-bean-definition-overriding: true
 # --- server
 server:
   port: 8081
