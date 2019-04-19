@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.approval.Approval;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,9 @@ public class LoginController {
     @Autowired
     private ApprovalStore approvalStore;
 
+    @Autowired
+    private TokenStore tokenStore;
+
     @RequestMapping("/")
     public ModelAndView root(Map<String, Object> model, Principal principal) {
 
@@ -45,5 +49,10 @@ public class LoginController {
         model.put("clientDetails", clientDetailsService.listClientDetails());
         return new ModelAndView("index", model);
 
+    }
+
+    @RequestMapping("/login")
+    public String loginPage() {
+        return "login";
     }
 }
